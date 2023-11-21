@@ -28,6 +28,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     
-    path('Home/', include('home.urls'))
+    path('home/', include('home.urls'))
 
 ]
