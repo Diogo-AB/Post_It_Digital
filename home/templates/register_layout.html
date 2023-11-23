@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} Registrar </title>
+    {% load static %}
+
+    <!-- Inclua seus arquivos de estilo, scripts, etc. aqui -->
+
+    <link rel="stylesheet" type="text/css" href="{% static 'app_home/content/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'app_home/content/site.css' %}" />
+    <script src="{% static 'app_home/scripts/modernizr-2.6.2.js' %}"></script>
+    <script src="{% static 'app_home/scripts/home.js' %}"></script>
+
+</head>
+
+<body>
+    <header>
+        <!-- Cabeçalho comum a todas as páginas -->
+
+        <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+
+            <!-- Botoes a esquerda-->
+
+            <div class="container-fluid">
+                <a class="navbar-brand"><h1>Registrar</h1></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarColor01">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link"><h2 id="dataAtual"></h2></a>
+                        </li>
+                    </ul>
+
+                    <!-- Botoes a direita-->
+
+                    <div class="navbar-brand">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="/">
+                                    Home
+                                    <span class="visually-hidden">(current)</span>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                    {% if user_name %}
+                                    {{ user_name }}
+                                    {% else %}
+                                    Login
+                                    {% endif %}
+                                </a>
+                                <div class="dropdown-menu">
+                                    {% if user.is_authenticated %}
+                                    <div class="dropdown-divider"></div>
+                                    {% else %}
+                                    <a class="dropdown-item" href="{% url 'login' %}">Login</a>
+                                    {% endif %}
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container mt-4">
+            <div class="d-flex justify-content-center">
+                <div class="registration-form">
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <!-- Rodapé comum a todas as páginas -->
+        <p>&copy; 2023 Note Nexus</p>
+    </footer>
+
+    <!-- Inclua seus scripts JavaScript, se necessário -->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+    <script src="{% static 'app_home/scripts/jquery-1.10.2.js' %}"></script>
+    <script src="{% static 'app_home/scripts/bootstrap.js' %}"></script>
+    <script src="{% static 'app_home/scripts/respond.js' %}"></script>
+    {% block scripts %}{% endblock %}
+
+</body>
+</html>
