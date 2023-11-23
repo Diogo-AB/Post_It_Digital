@@ -1,0 +1,49 @@
+﻿{% extends 'register_layout.html' %}
+
+{% block title %}Registrar - Seu Site{% endblock %}
+
+{% block content %}
+
+<h1>Registrar</h1>
+<!-- Conteúdo específico do template de registro -->
+
+<form method="post" class="registration-form">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="{{ form.username.id_for_label }}">Nome de usuário:</label>
+        {{ form.username }}
+        {% if form.username.errors %}
+        <div class="invalid-feedback">{{ form.username.errors.0 }}</div>
+        {% endif %}
+    </div>
+    
+    <div class="form-group">
+        <label for="{{ form.email.id_for_label }}">E-mail:</label>
+        <p class="form-control-lg">{{ form.email }}</p>
+        {% if form.email.errors %}
+        <div class="invalid-feedback">{{ form.email.errors.0 }}</div>
+        {% endif %}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.password1.id_for_label }}">Senha:</label>
+        {{ form.password1 }}
+        {% if form.password1.errors %}
+        <div class="invalid-feedback">{{ form.password1.errors.0 }}</div>
+        {% elif form.password1.value %}
+        {% endif %}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.password2.id_for_label }}">Confirmação de senha:</label>
+        {{ form.password2 }}
+        {% if form.password2.errors %}
+        <div class="invalid-feedback">{{ form.password2.errors.0 }}</div>
+        {% elif form.password2.value %}
+        <div class="valid-feedback">Senhas iguais.</div>
+        <small class="form-text text-muted">Informe a mesma senha informada anteriormente, para verificação.</small>
+        {% endif %}
+    </div>
+    <button type="submit" class="btn btn-primary">Criar Conta</button>
+</form>
+
+{% endblock %}

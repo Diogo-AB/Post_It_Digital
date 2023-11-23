@@ -1,21 +1,29 @@
 #views da home 
 
-from django.shortcuts import render
-from datetime import datetime
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.contrib.auth import login
+from .forms import CustomUserCreationForm
+from django.contrib.auth import logout
 
 # Create your views here.
 
 def home_view(request):
-    # Configurando o local para português do Brasil
-    
-    data_atual = datetime.now().date() 
-    return render(request, 'home.html', {'data_atual': data_atual})
-
-def AcessarConta(request):
-    return render(request, 'home.html')
+    user_name = request.user.username if request.user.is_authenticated else None
+    return render(request, 'home.html', {'user_name': user_name})
 
 
-def MinhasAnotacoes(request):
-    return render(request, 'home.html')
+def register_view(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('/')
+    else:
+        form = CustomUserCreationForm()
+
+    return render(request, 'register.html', {'form': form})
    
+def Logout_View(request):
+    logout(request)
+    return redirect('/')
