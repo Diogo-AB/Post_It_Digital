@@ -1,33 +1,119 @@
 ﻿{% extends "layout.html" %}
 
 {% block content %}
+    {% load static %}
 
-<div class="jumbotron">
-    <h1>Django</h1>
-    <p class="lead">Django .</p>
-    <p><a href="https://www.djangoproject.com/" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
-</div>
+<!-- Seu estilo personalizado -->
+<link rel="stylesheet" type="text/css" href="{% static 'app_home/content/bootstrap.min.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'app_home/content/site.css' %}" />
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            Django gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://djangobook.com/django-tutorials/">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>The Python Package Index is a repository of software for the Python programming language.</p>
-        <p><a class="btn btn-default" href="https://pypi.org/">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Microsoft Azure</h2>
-        <p>You can easily publish to Microsoft Azure using Visual Studio. Find out how you can host your application using a free trial today.</p>
-        <p><a class="btn btn-default" href="http://azure.microsoft.com">Learn more &raquo;</a></p>
-    </div>
-</div>
+<script src="{% static 'app_home/scripts/modernizr-2.6.2.js' %}"></script>
+<script lang="pt-br" src="{% static 'app_home/scripts/home.js' %}"></script>
 
-{% endblock %}
+<!-- Adicione o link para o Bootstrap CSS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post-its</title>
+
+</head>
+<body>
+
+    <!-- Adicione IDs aos botões e simplifique o container de semanas -->
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-secondary" id="btn-left">Left</button>
+        <button type="button" class="btn btn-secondary" id="btn-middle">Middle</button>
+        <button type="button" class="btn btn-secondary" id="btn-right">Right</button>
+    </div>
+
+
+    <!-- Container de semanas -->
+    <div class="d-flex mt-3" id="weeks-container">
+        <!-- Aqui serão adicionadas as semanas dinamicamente -->
+        <!-- Dias da semana -->
+        <div class="d-flex mt-3">
+            {% for day, date in days_and_dates %}
+            <div class="card border-primary mb-3 me-3" style="max-width: 50rem;">
+                <div class="card-header date">
+                    {{ day }}
+                    {% if 'Sabado' in day or 'Domingo' in day %}
+                    <br>{{ date }}
+                    {% else %}
+                    - {{ date }}
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">Header</h4>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <!-- Post-its -->
+    <div class="d-flex mt-3">
+        {% for i in date_range %}
+        <div class="card border-primary mb-3 me-3" style="max-width: 50rem;">
+            <div class="card-header date" id="date-{{ i }}">{{ date_values.i }}</div>
+            <div class="card-date">{{ date_values.i }}</div>
+            <div class="card-body">
+                <h4 class="card-title">Header</h4>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const weekApiUrl = '/api/semanas/';
+            let currentWeek = 0;  // Mantenha o controle da semana atual
+
+            // Função para carregar os dados da semana
+            function loadWeek(week) {
+                // Fazer uma chamada AJAX para a API e atualizar os dados na página
+                // Substitua 'weekApiUrl' pelo caminho correto da sua API
+                fetch(`${weekApiUrl}${week}/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Atualize os dados na página (você pode usar jQuery ou manipulação direta do DOM)
+                        console.log('Dados da semana:', data);
+                    })
+                    .catch(error => console.error('Erro ao carregar os dados:', error));
+            }
+
+            // Manipuladores de clique para os botões
+            document.getElementById('btn-left').addEventListener('click', function () {
+                currentWeek -= 1;
+                loadWeek(currentWeek);
+            });
+
+            document.getElementById('btn-middle').addEventListener('click', function () {
+                currentWeek = 0;  // Volte para a semana atual
+                loadWeek(currentWeek);
+            });
+
+            document.getElementById('btn-right').addEventListener('click', function () {
+                currentWeek += 1;
+                loadWeek(currentWeek);
+            });
+
+            // Carregue a semana atual ao carregar a página
+            loadWeek(currentWeek);
+        });
+    </script>
+
+
+
+</body>
+</html>
+
+    {% endblock %}

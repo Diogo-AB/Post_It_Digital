@@ -25,7 +25,8 @@ SECRET_KEY = 'a513c987-2cff-4328-98e4-e62d6861e740'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_ORIGINS = []
+
 
 # Application references
 # https://docs.djangoproject.com/en/2.1/ref/settings/#std:setting-INSTALLED_APPS
@@ -43,6 +44,9 @@ INSTALLED_APPS = [
     
     'rest_framework',
     'bootstrap5',
+    'api',
+   
+ 
  
 ]
 
@@ -56,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'Post_It_Digital.urls'
