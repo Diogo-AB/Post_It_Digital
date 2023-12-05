@@ -1,13 +1,3 @@
-body {
-    padding-top: 50px;
-    padding-bottom: 20px;
-}
-
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
-}
 
 /* Set width on the form input elements since they're 100% wide by default */
 input,
@@ -39,4 +29,34 @@ input[type="checkbox"].input-validation-error {
 
 .validation-summary-valid {
     display: none;
+}
+
+.notification-container {
+    position: relative;
+}
+
+.notification-button.has-notifications + .notification-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: red; /* Cor da bolinha quando há notificações não lidas */
+    color: white; /* Cor do texto dentro da bolinha */
+
+    font-size: 55%; /* Ajuste a porcentagem conforme necessário */
+    height: 50%; /* Ajuste a porcentagem conforme necessário */
+    width: 10%; /* Ajuste a porcentagem conforme necessário */
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px; /* Espaçamento entre os botões e os cards */
+    padding: 30px; /* Adiciona um pouco de espaço ao redor dos elementos */
+    margin-top: 40px; /* Ajusta a posição vertical dos botões */
+}
+
+.bottom-date {
+    display: flex;
+    flex-direction: column-reverse;
 }
