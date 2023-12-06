@@ -26,8 +26,9 @@ urlpatterns = [
          name='login'),
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     
-    path('home/', include('home.urls'))
+    path('home/', include('home.urls')),
+    path('api/', include('api.urls')),
 
 ]
