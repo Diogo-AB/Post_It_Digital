@@ -99,10 +99,11 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
                                 {% else %}
-                                <a class="dropdown-item" href="{% url 'login' %}">Login</a>
+                                <a class="dropdown-item" href="{% url 'login' %}">{{ user.username }}</a>
                                 <a class="dropdown-item" href="{% url 'register' %}">Registrar</a>
                                 {% endif %}
                             </div>
+
                         </li>
 
                     </ul>
