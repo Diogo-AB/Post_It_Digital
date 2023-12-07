@@ -1,62 +1,70 @@
-
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+/*body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px; /* Espaçamento entre os botões e os cards */
+padding: 30px; /* Adiciona um pouco de espaço ao redor dos elementos */
+margin-top: 40px; /* Ajusta a posição vertical dos botões 
 }
 
-/* styles for validation helpers */
-.field-validation-error {
-    color: #b94a48;
+.d-flex {
+    display: flex;
+    gap: 3px; /* Espaçamento entre os elementos dentro de d-flex 
 }
 
-.field-validation-valid {
-    display: none;
+/* Seletor específico para os cartões dos dias da semana na lista 
+.list-group-item {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px; /* Adiciona espaço abaixo de cada item da lista 
 }
 
-input.input-validation-error {
-    border: 1px solid #b94a48;
+.card {
+    width: 20rem; Largura dos cartões dos dias da semana 
 }
-
-input[type="checkbox"].input-validation-error {
-    border: 0 none;
+/*
+.btn-group {
+    margin-bottom: 10px; /* Adiciona espaço abaixo do grupo de botões 
 }
-
-.validation-summary-errors {
-    color: #b94a48;
+.bottom-date {
+    display: flex;
+    flex-direction: column-reverse;
 }
-
-.validation-summary-valid {
-    display: none;
-}
-
-.notification-container {
-    position: relative;
-}
-
-.notification-button.has-notifications + .notification-count {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background-color: red; /* Cor da bolinha quando há notificações não lidas */
-    color: white; /* Cor do texto dentro da bolinha */
-
-    font-size: 55%; /* Ajuste a porcentagem conforme necessário */
-    height: 50%; /* Ajuste a porcentagem conforme necessário */
-    width: 10%; /* Ajuste a porcentagem conforme necessário */
-}
-
+*/
 body {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 5px; /* Espaçamento entre os botões e os cards */
-    padding: 30px; /* Adiciona um pouco de espaço ao redor dos elementos */
+    padding: 5px; /* Adiciona um pouco de espaço ao redor dos elementos */
     margin-top: 40px; /* Ajusta a posição vertical dos botões */
 }
 
-.bottom-date {
-    display: flex;
-    flex-direction: column-reverse;
+.card {
+    margin-bottom: 15px;
+    margin-top: 80px; /* Ajuste o valor conforme necessário para posicionar os cards mais abaixo */
+    gap: 15px;
+    position: relative;
+    cursor: pointer;
 }
+
+.list-group {
+    margin-bottom: 10px;
+    margin-top: 80px; /* Ajuste o valor conforme necessário para posicionar os cards mais abaixo */
+}
+
+span[contenteditable="true"] {
+    outline: none;
+    border: none;
+    cursor: text;
+}
+.list-group-item {
+    margin-top: 0px;
+    margin-bottom: 70px; /* Adiciona espaço inferior entre os itens da lista */
+    height: 10%;
+}
+
+.no-margin-bottom {
+    margin-bottom: 0 !important;
+}
+

@@ -9,8 +9,10 @@ document.addEventListener("DOMContentLoaded", function () {
     var diaDaSemana = diasDaSemana[dataAtual.getDay()];
     document.getElementById("dataAtual").innerHTML = diaDaSemana;
 });
-function addPostIt(postItListId) {
-    const postItList = document.getElementById(postItListId);
+
+
+function addPostIt(day) {
+    const postItList = document.getElementById(`post-its-${day}`);
 
     // Sequência de classes de cards disponíveis no Bootstrap
     const cardClasses = [
@@ -64,6 +66,15 @@ function addPostIt(postItListId) {
     postItList.appendChild(newPostIt);
 }
 
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Adicione um ouvinte de evento ao botão
+    const nextWeekButton = document.getElementById('nextWeekButton');
+    nextWeekButton.addEventListener('click', loadNextWeek);
+});
+
 document.addEventListener('DOMContentLoaded', function () {
     updateDate();
 });
@@ -90,3 +101,55 @@ function getDayName(index) {
 function formatDate(date) {
     return date.toLocaleDateString('pt-BR', { day: 'numeric' });
 }
+
+
+// Função para carregar os dados da próxima semana
+
+// Verifique se a variável já foi declarada antes de declará-la novamente
+
+function formatDateString(dateString) {
+    return dateString ? dateString.split('-').reverse().join('/') : '';
+}
+
+// Função para atualizar a interface com os dados da próxima semana
+function updateInterface(data) {
+    // Exemplo: Atualizar um elemento na interface com a data de início da semana
+    const startDateElement = document.getElementById('startDate');
+    if (startDateElement) {
+        startDateElement.textContent = formatDateString(data.start_date);
+    }
+
+    // Adicione lógica adicional para atualizar outros elementos da interface conforme necessário
+}
+
+// Função para carregar os dados da próxima semana
+function loadNextWeek() {
+    // Substitua o valor da semana atual conforme necessário
+    const currentWeek = 1;
+    fetch(`/api/semanas/${currentWeek + 1}/`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Erro na requisição: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Certifique-se de que data é definido antes de chamar updateInterface
+            if (data) {
+                updateInterface(data);
+            } else {
+                console.error('Erro ao carregar os dados da próxima semana: Dados indefinidos');
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao carregar os dados da próxima semana:', error);
+        });
+}
+
+// Adicione um ouvinte de evento ao botão
+document.addEventListener('DOMContentLoaded', function () {
+    const nextWeekButton = document.getElementById('nextWeekButton');
+    if (nextWeekButton) {
+        nextWeekButton.addEventListener('click', loadNextWeek);
+    }
+});
