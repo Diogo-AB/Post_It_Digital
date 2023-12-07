@@ -66,6 +66,7 @@
     <Content Include="app\static\app\content\bootstrap.rtl.min.css" />
     <Content Include="app\static\app\content\_bootswatch.scss" />
     <Content Include="app\static\app\content\_variables.scss" />
+    <Content Include="app\static\favicon.ico" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\site.css" />

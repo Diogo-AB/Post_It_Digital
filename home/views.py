@@ -1,7 +1,7 @@
 # No arquivo views.py
 
 from datetime import datetime, timedelta
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from django.contrib.auth import login, logout
 
@@ -30,9 +30,9 @@ def home_view(request, week_number=None):
     return render(request, 'home.html', context)
 
 
-def register_view(request):
+def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = new_func(request)
         if form.is_valid():
             user = form.save()
             login(request, user)
@@ -42,8 +42,14 @@ def register_view(request):
 
     return render(request, 'register.html', {'form': form})
 
+def new_func(request):
+    form = UserCreationForm(request.POST)
+    return form
+
 
 def Logout_View(request):
     logout(request)
     return redirect('/')
 
+def notas(request):
+    return redirect('notas.html')

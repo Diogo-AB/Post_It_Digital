@@ -12,6 +12,7 @@
     <meta charset="utf-8" />
     <meta lang="pt-br" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{% static 'app_home/favicon.ico' %}">
     <title>{{ title }} Home </title>
     {% load static %}
 
@@ -99,10 +100,11 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
                                 {% else %}
-                                <a class="dropdown-item" href="{% url 'login' %}">Login</a>
+                                <a class="dropdown-item" href="{% url 'login' %}">{{ user.username }}</a>
                                 <a class="dropdown-item" href="{% url 'register' %}">Registrar</a>
                                 {% endif %}
                             </div>
+
                         </li>
 
                     </ul>
