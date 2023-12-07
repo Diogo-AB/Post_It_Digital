@@ -8,7 +8,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'app_home/content/site.css' %}" />
 
 <script src="{% static 'app_home/scripts/modernizr-2.6.2.js' %}"></script>
-<script lang="pt-br" src="{% static 'app_home/scripts/home.js' %}"></script>
+<!--<script lang="pt-br" src="{% static 'app_home/scripts/home.js' %}"></script> -->
 
 <!-- Adicione o link para o Bootstrap CSS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -21,99 +21,140 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Post-its</title>
-
 </head>
 <body>
-
-    <!-- Adicione IDs aos botões e simplifique o container de semanas -->
-    <div class="btn-group" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-secondary" id="btn-left">Left</button>
-        <button type="button" class="btn btn-secondary" id="btn-middle">Middle</button>
-        <button type="button" class="btn btn-secondary" id="btn-right">Right</button>
-    </div>
-
-
-    <!-- Container de semanas -->
-    <div class="d-flex mt-3" id="weeks-container">
-        <!-- Aqui serão adicionadas as semanas dinamicamente -->
-        <!-- Dias da semana -->
-        <div class="d-flex mt-3">
-            {% for day, date in days_and_dates %}
-            <div class="card border-primary mb-3 me-3" style="max-width: 50rem;">
-                <div class="card-header date">
-                    {{ day }}
-                    {% if 'Sabado' in day or 'Domingo' in day %}
-                    <br>{{ date }}
-                    {% else %}
-                    - {{ date }}
-                    {% endif %}
-                </div>
-                <div class="card-body">
-                    <h4 class="card-title">Header</h4>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-            </div>
-            {% endfor %}
+    <!-- cards da direita -->
+    <div class="row">
+        <div class="col-md-6">
+            <!-- dias da semana -->
+            <ul class="list-group" style="max-height: 37rem;">
+                {% for day, date in days_and_dates %}
+                <li class="list-group-item no-margin-bottom d-flex justify-content-between align-items-center">
+                    <div>
+                        {{ day }} - {{ date }}
+                    </div>
+                    <span class="badge bg-primary rounded-pill">14</span>
+                </li>
+                {% endfor %}
+            </ul>
         </div>
-    </div>
 
-
-    <!-- Post-its -->
-    <div class="d-flex mt-3">
-        {% for i in date_range %}
-        <div class="card border-primary mb-3 me-3" style="max-width: 50rem;">
-            <div class="card-header date" id="date-{{ i }}">{{ date_values.i }}</div>
-            <div class="card-date">{{ date_values.i }}</div>
-            <div class="card-body">
-                <h4 class="card-title">Header</h4>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <div class="card text-white bg-info mb-3" style="max-width: 20rem;">
+            <div class="card-header editable">Header</div>
+            <div class="card-body editable">
+                <h4 class="card-title">title<br />Some quick example text to build on the card title and make up the bulk of the card's content.</h4>
+                <p class="card-text"></p>
             </div>
         </div>
-        {% endfor %}
+
+
+        <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+            <div class="card-header editable">Header</div>
+            <div class="card-body editable">
+                <h4 class="card-title">title<br />Some quick example text to build on the card title and make up the bulk of the card's content.</h4>
+                <p class="card-text"></p>
+            </div>
+        </div>
+
+        <div class="card text-white bg-primary mb-3" style="max-width: 20rem; max-height: 20rem;">
+            <div class="card-header editable">Header</div>
+            <div class="card-body editable">
+                <h4 class="card-title">title<br />Some quick example text to build on the card title and make up the bulk of the card's content.</h4>
+                <p class="card-text"></p>
+            </div>
+        </div>
+        <div class="card text-white bg-warning mb-3" style="max-width: 20rem; max-height: 20rem;">
+            <div class="card-header editable">Header</div>
+            <div class="card-body editable">
+                <h4 class="card-title">title<br />Some quick example text to build on the card title and make up the bulk of the card's content.</h4>
+                <p class="card-text"></p>
+            </div>
+        </div>
+
+
+        <div class="col-md-6">
+            <div class="imagem card" style="max-height: 37rem;">
+                <h3 class="card-header editable">Card header</h3>
+                <div class="preview">
+                    <!-- Área para exibir a pré-visualização da imagem -->
+                </div>
+                <label for="imagemInput" class="form-label mt-3">Escolha uma imagem:</label>
+                <input type="file" class="form-control" id="imagemInput" style="display: none;">
+                <button type="button" class="btn btn-primary mt-2" onclick="document.getElementById('imagemInput').click();">
+                    Escolher Imagem
+                </button>
+                <div class="card-footer text-muted">
+                    2 days ago
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const weekApiUrl = '/api/semanas/';
-            let currentWeek = 0;  // Mantenha o controle da semana atual
+            // Adiciona um evento de clique para cada elemento editável
+            var editableElements = document.querySelectorAll('.editable');
+            editableElements.forEach(function (element) {
+                element.addEventListener('click', function () {
+                    // Salva o conteúdo atual do elemento
+                    var originalContent = element.innerHTML.trim();
 
-            // Função para carregar os dados da semana
-            function loadWeek(week) {
-                // Fazer uma chamada AJAX para a API e atualizar os dados na página
-                // Substitua 'weekApiUrl' pelo caminho correto da sua API
-                fetch(`${weekApiUrl}${week}/`)
-                    .then(response => response.json())
-                    .then(data => {
-                        // Atualize os dados na página (você pode usar jQuery ou manipulação direta do DOM)
-                        console.log('Dados da semana:', data);
-                    })
-                    .catch(error => console.error('Erro ao carregar os dados:', error));
-            }
+                    // Cria um campo de span editável
+                    var editableSpan = document.createElement('span');
+                    editableSpan.contentEditable = 'true';
+                    editableSpan.innerHTML = originalContent;
 
-            // Manipuladores de clique para os botões
-            document.getElementById('btn-left').addEventListener('click', function () {
-                currentWeek -= 1;
-                loadWeek(currentWeek);
+                    // Substitui o conteúdo pelo span editável
+                    element.innerHTML = '';
+                    element.appendChild(editableSpan);
+
+                    // Adiciona um evento de perda de foco para salvar as alterações
+                    editableSpan.addEventListener('blur', function () {
+                        // Atualiza o conteúdo com o valor do span editável
+                        element.innerHTML = editableSpan.innerHTML;
+                    });
+
+                    // Define o foco no span editável
+                    editableSpan.focus();
+                });
             });
-
-            document.getElementById('btn-middle').addEventListener('click', function () {
-                currentWeek = 0;  // Volte para a semana atual
-                loadWeek(currentWeek);
-            });
-
-            document.getElementById('btn-right').addEventListener('click', function () {
-                currentWeek += 1;
-                loadWeek(currentWeek);
-            });
-
-            // Carregue a semana atual ao carregar a página
-            loadWeek(currentWeek);
         });
+        // Adiciona um ouvinte de eventos ao campo de upload de arquivo
+
+        document.getElementById('imagemInput').addEventListener('change', function (event) {
+            var arquivo = event.target.files[0];
+
+            if (arquivo) {
+                // Cria um objeto de URL para a pré-visualização da imagem
+                var url = URL.createObjectURL(arquivo);
+
+                // Cria um elemento de imagem para a pré-visualização
+                var imagemPreview = document.createElement('img');
+                imagemPreview.src = url;
+                imagemPreview.style.width = '633px'; // Define a largura fixa da imagem
+                imagemPreview.style.height = 'auto'; // Define a altura fixa da imagem
+
+                // Obtém a referência à área de pré-visualização
+                var areaPreview = document.querySelector('.preview');
+
+                // Remove qualquer conteúdo anterior
+                areaPreview.innerHTML = '';
+
+                // Adiciona a pré-visualização da imagem à área
+                areaPreview.appendChild(imagemPreview);
+            }
+        });
+   
     </script>
+
+
+
 
 
 
 </body>
 </html>
+<script src="app_home/scripts/home.js" defer></script>
 
     {% endblock %}
